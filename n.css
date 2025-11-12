@@ -254,7 +254,7 @@ body {
   border: none;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  box-shadow: 0 0.3em 0.6em rgba(22, 163, 74, 0.3);
+  box-shadow: 0 0.3em 0.6em #00C7FF;
   animation: scaleUp 2s infinite;
   max-width: 95%;
   width: 100%;
@@ -264,13 +264,58 @@ body {
 
 .div16:hover {
   transform: translateY(-0.1em);
-  box-shadow: 0 0.4em 0.8em #244572;
+  box-shadow: 0 0.4em 0.8em #00C7FF;
   background: #244572;
 }
+    .cta{
+      display:block;
+      width:100%;
+      text-decoration:none;
+      margin:18px 0 6px;
+      background:#244572;
+      color:#ffffff;
+      border-radius:999px;
+      border:2px solid #76CCF3;
+      padding:18px 20px;
+      text-align:center;
+      font-weight:900;
+      font-size:29px;
+      /* box-shadow:0 8px 0 #76CCF3, 0 18px 40px rgba(0,0,0,.1); */
+      transition:transform .06s ease, box-shadow .06s ease, background .2s ease;
+      position:relative;    /* needed for shimmer pseudo-element */
+      overflow:hidden;      /* clip shimmer to button */
+    }
+
+    /* Shimmer effect */
+    .shimmer { /* apply this class alongside .cta, e.g. <a class="cta shimmer"> */ }
+    .cta.shimmer::after{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.65) 50%,
+      rgba(255,255,255,0) 100%);
+      transform: skewX(-20deg);
+      filter:blur(6px);
+      opacity: 0.95;
+      pointer-events: none;
+      animation: shimmer 1.6s linear infinite;
+    }
+
+    @keyframes shimmer{
+      0%   { left: -60%; }
+      100% { left: 160%; }
+    }
+    .cta:hover{ background:var(--accent-strong); transform:translateY(1px); box-shadow:0 7px 0 #111, 0 16px 32px rgba(0,0,0,.12); }
+    .cta:active{ transform:translateY(2px); box-shadow:0 6px 0 #111, 0 12px 24px rgba(0,0,0,.14); }
 
 .div16:active {
   transform: translateY(0);
-  box-shadow: 0 0.2em 0.4em rgba(22, 163, 74, 0.3);
+  box-shadow: 0 0.2em 0.4em #00C7FF;
 }
 
 .div17 {
