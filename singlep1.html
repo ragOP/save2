@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport" />
+  <title>Save Max Auto — Auto Insurance Savings</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Ringba (call tracking) -->
+  <script src="//b-js.ringba.com/CAfdb7eb5bdaa24fb8a155f293ece397ae" async></script>
+
+  <style>
+    :root{
+      --ink:#111418;
+      --muted:#6b7280;
+      --bg:#ffffff;            /* page edges */
+      --panel:#ffffff;         /* main white card */
+      --brand:#000000;         /* black header band */
+      --accent:#ffde6a;        /* gold band + button base */
+      --accent-strong:#f2cc3a; /* darker gold hover */
+      --cut:#ffd84d;           /* 'CUT' highlight */
+      --success:#18a957;
+      --radius-xl:24px;
+      --radius:16px;
+      --shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+ 
+     
+      min-height:100dvh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      /* padding:16px; */
+    }
+
+    /* Shell */
+    .phone-viewport{
+      width:100%;
+  
+      background:var(--panel);
+      /* border-radius:var(--radius-xl); */
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    /* Header */
+    .brand-bar{
+      background:#fff;
+      color:#fff;
+      text-align:center;
+      padding:14px 18px 12px;
+      font-weight:800;
+      letter-spacing:.4px;
+      font-size:20px;
+    }
+    .brand-bar .word{opacity:.9}
+    .brand-bar .cut{color:var(--cut); margin:0 .2ch; opacity:1}
+
+    .gold-strip{
+      background:#00C7FF;
+      color:#ffffff;
+      text-align:center;
+      font-weight:700;
+      font-size:14px;
+      padding:10px 14px;
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+
+    /* Content */
+    .content{
+      padding:22px 20px 26px;
+      background:#fff;
+    }
+
+    .headline{
+      font-size:28px;
+      line-height:1.24;
+      font-weight:800;
+      margin:10px 0 14px;
+      letter-spacing:-.2px;
+    }
+
+    .car-wrap{
+      display:flex;
+      justify-content:center;
+      margin:18px 0 10px;
+    }
+    .car-img{
+      display:block;
+      width:100%;
+      max-width:320px;
+      height:auto;
+      border-radius:8px;
+    }
+
+    .list{
+      margin:10px 0 18px;
+      padding:0 0 0 2px;
+      list-style:none;
+    }
+    .list li{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      font-size:18px;
+      line-height:1.45;
+      margin:10px 0;
+    }
+    .check{
+      flex:0 0 auto;
+      width:22px;height:22px;
+      display:inline-grid;place-items:center;
+      border-radius:999px;
+      background:#f2fbf5;
+      color:var(--success);
+      border:1px solid rgba(24,169,87,.25);
+      font-size:12px;
+      margin-top:1px;
+    }
+      .check2{
+     
+    
+    }
+
+    /* CTA */
+    .cta{
+      display:block;
+      width:100%;
+      text-decoration:none;
+      margin:18px 0 6px;
+      background:#244572;
+      color:#ffffff;
+      border-radius:999px;
+      border:2px solid #76CCF3;
+      padding:18px 20px;
+      text-align:center;
+      font-weight:900;
+      font-size:29px;
+      /* box-shadow:0 8px 0 #76CCF3, 0 18px 40px rgba(0,0,0,.1); */
+      transition:transform .06s ease, box-shadow .06s ease, background .2s ease;
+      position:relative;    /* needed for shimmer pseudo-element */
+      overflow:hidden;      /* clip shimmer to button */
+    }
+
+    /* Shimmer effect */
+    .shimmer { /* apply this class alongside .cta, e.g. <a class="cta shimmer"> */ }
+    .cta.shimmer::after{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.65) 50%,
+      rgba(255,255,255,0) 100%);
+      transform: skewX(-20deg);
+      filter:blur(6px);
+      opacity: 0.95;
+      pointer-events: none;
+      animation: shimmer 1.6s linear infinite;
+    }
+
+    @keyframes shimmer{
+      0%   { left: -60%; }
+      100% { left: 160%; }
+    }
+    .cta:hover{ background:var(--accent-strong); transform:translateY(1px); box-shadow:0 7px 0 #111, 0 16px 32px rgba(0,0,0,.12); }
+    .cta:active{ transform:translateY(2px); box-shadow:0 6px 0 #111, 0 12px 24px rgba(0,0,0,.14); }
+
+    .cta .ico{ margin-right:8px; }
+
+    .subcopy{
+      text-align:center;
+      color:#3b3b3b;
+      font-size:13px;
+      margin-top:12px;
+    }
+    .subcopy em{ font-weight:700 }
+
+    /* Footer shadow fade like screenshot */
+    .fade-bottom{
+      height:56px;
+      background:linear-gradient(0deg, rgba(0,0,0,.10), rgba(0,0,0,0));
+      border-radius:0 0 var(--radius-xl) var(--radius-xl);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width:380px){
+      .headline{ font-size:26px; }
+      .cta{ font-size:24px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="phone-viewport" role="main">
+    <!-- Top brand -->
+    <div class="brand-bar" aria-label="Brand">
+    <img src="l.svg" alt="Save Max Auto Logo" style="height:22px; vertical-align:middle;" />
+    </div>
+
+    <!-- Gold strip -->
+    <div class="gold-strip">Stop Overpaying Today – Call Us Now!</div>
+
+    <!-- Content -->
+    <section class="content">
+      <h1 class="headline">
+        CALL US and cut your Auto Insurance rate by upto 80% today!
+      </h1>
+
+      <!-- Car illustration (replace src with your car image) -->
+      <div class="car-wrap">
+        <!-- Replace "car.png" with your provided image filename -->
+        <img src="mana.png" alt="Blue sedan illustration" class="car-img" />
+      </div>
+
+      <!-- Bullets -->
+    <ul aria-label="Key points" 
+style="
+  list-style:none;
+ 
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  font-size: 20px;
+">
+  <li style="display:flex; align-items:center; gap:10px;">
+  <img src="ck.png" alt=""  width="14" height="14"/>
+    <span style="font-weight:700;">100% Free Help.</span>
+  </li>
+
+  <li style="display:flex; align-items:center; gap:10px;">
+   <img src="ck.png" alt=""  width="14" height="14"/>
+    <span>Takes <strong>5–10 minutes.</strong></span>
+  </li>
+
+  <li style="display:flex; align-items:center; gap:10px;">
+    <img src="ck.png" alt=""  width="14" height="14"/>
+    <span>Tap below to <strong>CALL NOW!</strong></span>
+  </li>
+</ul>
+
+
+      <!-- CTA (update number + tel:) -->
+      <a
+        href="tel:+18311231234"
+        class="cta shimmer"
+        aria-label="Call (831) 123-1234 now"
+        title="Call (831) 123-1234"
+      >
+        CALL (831) 123-1234
+      </a>
+
+      <p class="subcopy">
+       Don’t want to call? 
+        <em><u>Fill out the form instead</u></em>
+      </p>
+    </section>
+        <section id="live-bar" class="ll-section" aria-hidden="false">
+      <div
+        class="ll-container empty-section--container"
+        style="padding-top: 12px; padding-bottom: 12px"
+      >
+        <div
+          class="live-pill"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span class="live-icon" aria-hidden="true"></span>
+          <span class="live-text"
+            ><span id="live-count">73</span> People Are Claiming Right
+            Now!</span
+          >
+        </div>
+      </div>
+
+      <style>
+        /* Live bar styles */
+      #live-bar {
+  position: relative;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: max-content;
+}
+
+#live-bar .ll-container {
+  justify-content: center;
+  padding: 0;
+}
+
+        .live-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          background: linear-gradient(90deg, #fffbf5, #fff7f2);
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          padding: 10px 16px;
+          border-radius: 999px;
+          box-shadow: 0 6px 18px rgba(12, 24, 40, 0.06);
+          font-weight: 600;
+          color: #1f2937;
+          font-size: clamp(15px, 2.2vw, 18px);
+          overflow: visible;
+        }
+
+        .live-icon {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #00C7FF;
+          position: relative;
+          box-shadow: 0 0 0 rgba(239, 68, 68, 0.6);
+        }
+        .live-icon::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          animation: live-pulse 2s infinite;
+          background: radial-gradient(
+            circle at center,
+            rgba(239, 68, 68, 0.18),
+            transparent 40%
+          );
+          z-index: -1;
+        }
+        @keyframes live-pulse {
+          0% {
+            transform: scale(0.9);
+            opacity: 0.9;
+          }
+          70% {
+            transform: scale(2.2);
+            opacity: 0;
+          }
+          100% {
+            transform: scale(0.9);
+            opacity: 0;
+          }
+        }
+
+        /* small pop when number updates */
+        #live-count {
+          display: inline-block;
+          transition: transform 200ms ease, color 200ms;
+          color: #033565;
+        }
+        #live-count.pulse {
+          transform: scale(1.14);
+          color: #00C7FF;
+        }
+
+        /* responsive spacing */
+        @media (max-width: 576px) {
+          .live-pill {
+            gap: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+          }
+          .live-icon {
+            width: 10px;
+            height: 10px;
+          }
+        }
+      </style>
+
+      <script>
+        (function () {
+          const el = document.getElementById("live-count");
+          if (!el) return;
+          const MAX_COUNT = 97;
+          let count = Math.min(parseInt(el.textContent, 10) || 73, MAX_COUNT);
+
+          // increment periodically to simulate "live" activity
+          const minInterval = 2500; // ms
+          const maxInterval = 6000; // ms
+
+          function randomBetween(a, b) {
+            return Math.floor(Math.random() * (b - a + 1)) + a;
+          }
+
+          function tick() {
+            // small chance to add a slightly larger jump
+            const jump =
+              Math.random() < 0.12 ? randomBetween(2, 6) : randomBetween(1, 2);
+            const next = Math.min(count + jump, MAX_COUNT);
+            count = next;
+            el.textContent = count.toLocaleString();
+            // brief visual pulse
+            el.classList.add("pulse");
+            setTimeout(() => el.classList.remove("pulse"), 300);
+            // stop scheduling when we've reached the max
+            if (count >= MAX_COUNT) {
+              return;
+            }
+            // schedule next tick
+            setTimeout(tick, randomBetween(minInterval, maxInterval));
+          }
+
+          // start after a small delay so page load feels natural
+          setTimeout(tick, 1200);
+        })();
+      </script>
+    </section>
+
+    <!-- Bottom fade -->
+    <div class="fade-bottom" aria-hidden="true"></div>
+  </main>
+</body>
+</html>
