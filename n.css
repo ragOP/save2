@@ -264,8 +264,8 @@ body {
 
 .div16:hover {
   transform: translateY(-0.1em);
-  box-shadow: 0 0.4em 0.8em #00C7FF;
-  background: #244572;
+  /* box-shadow: 0 0.4em 0.8em #00C7FF; */
+  /* background: #244572; */
 }
     .cta{
       display:block;
