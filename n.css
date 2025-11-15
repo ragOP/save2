@@ -310,8 +310,8 @@ body {
       0%   { left: -60%; }
       100% { left: 160%; }
     }
-    .cta:hover{ background:var(--accent-strong); transform:translateY(1px); box-shadow:0 7px 0 #111, 0 16px 32px rgba(0,0,0,.12); }
-    .cta:active{ transform:translateY(2px); box-shadow:0 6px 0 #111, 0 12px 24px rgba(0,0,0,.14); }
+    /* .cta:hover{ background:var(--accent-strong); transform:translateY(1px); box-shadow:0 7px 0 #111, 0 16px 32px rgba(0,0,0,.12); } */
+    /* .cta:active{ transform:translateY(2px); box-shadow:0 6px 0 #111, 0 12px 24px rgba(0,0,0,.14); } */
 
 .div16:active {
   transform: translateY(0);
