@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoQuote Pilot - Story Lander</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ugaqmwe991");
+  </script>
+
+  <!-- TikTok Pixel Code Start -->
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+  var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+  ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    ttq.load('D2H5NABC77UCCBANISK0');
+    ttq.page();
+  }(window, document, 'ttq');
+  </script>
+  <!-- TikTok Pixel Code End -->
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PL5B9NSD');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Your tracker -->
+  <script type="text/javascript" src="https://trk.reliableautopolicy.com/track.js?rtkcmpid=692430d43ce7194f6210e962"></script>
+
+  <style>
+    :root{
+      --blue:#0b63ad;
+      --blue-dark:#084f8a;
+      --blue-line:#4e8fd3;
+      --text:#0b1220;
+      --muted:#5b6575;
+      --line:#e5e7eb;
+      --orange:#f59e0b;
+      --yellow:#fde047;
+
+      --radius:18px;
+      --shadow: 0 16px 40px rgba(2,6,23,.20);
+      --shadowSoft: 0 12px 28px rgba(2,6,23,.14);
+
+      --storyDur: 3000; /* default ms per story (can be overridden per slide with data-duration) */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:#0b1220;
+      color:#fff;
+      overflow:hidden; /* important: whole page behaves like stories */
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ================== STORY APP SHELL ================== */
+    .app{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#0b1220;
+    }
+
+    .viewport{
+      width:100%;
+      height:100%;
+      max-width:520px; /* story phone width */
+      position:relative;
+      background:#0b1220;
+      overflow:hidden;
+    }
+
+    /* Top progress like Instagram */
+    .progress{
+      position:absolute;
+      left:12px; right:12px; top:10px;
+      display:grid;
+      grid-template-columns: repeat(var(--count, 6), 1fr);
+      gap:6px;
+      z-index:50;
+      pointer-events:none;
+    }
+    .bar{
+      height:3px;
+      border-radius:999px;
+      background:rgba(255,255,255,.22);
+      overflow:hidden;
+    }
+    .bar > span{
+      display:block;
+      height:100%;
+      width:0%;
+      background:#fff;
+      border-radius:999px;
+      transition: width 80ms linear;
+    }
+
+    /* Top header row (small) */
+    .top{
+      position:absolute;
+      left:12px; right:12px; top:20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      z-index:45;
+      pointer-events:none; /* keep taps for story navigation */
+      margin-top:8px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      pointer-events:none;
+    }
+    .brand .badge{
+      width:34px;height:34px;border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.22);
+      display:flex;align-items:center;justify-content:center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      font-weight:950;
+    }
+    .brand .txt{
+      display:flex;flex-direction:column;
+      line-height:1.05;
+    }
+    .brand .txt b{font-size:12px; font-weight:950; letter-spacing:.2px}
+    .brand .txt small{font-size:10px; opacity:.85; font-weight:800}
+
+    .meta{
+      font-size:11px;
+      font-weight:900;
+      opacity:.85;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      pointer-events:none;
+    }
+    .dot{width:4px;height:4px;border-radius:999px;background:rgba(255,255,255,.55)}
+
+    /* Story track */
+    .track{
+      height:100%;
+      display:flex;
+      will-change: transform;
+      transition: transform 360ms cubic-bezier(.2,.9,.2,1);
+    }
+    .slide{
+      min-width:100%;
+      height:100%;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding: 86px 14px 16px; /* room for progress/header */
+      overflow:hidden;
+    }
+
+    /* Background layers per slide */
+    .bg{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(1000px 460px at 50% 0%, rgba(253,224,71,.18), transparent 55%),
+        linear-gradient(180deg, rgba(11,99,173,.25), rgba(11,99,173,.95)),
+        url("https://s.autoquotepilot.com/V4-rfv-opf-5/images/banner-img.jpg") center/cover no-repeat;
+      transform: scale(1.03);
+      filter:saturate(1.08);
+    }
+    .bg.alt2{
+      background:
+        radial-gradient(900px 420px at 30% 10%, rgba(255,255,255,.14), transparent 60%),
+        linear-gradient(180deg, rgba(8,79,138,.20), rgba(8,79,138,.96)),
+        url("https://s.autoquotepilot.com/V4-rfv-opf-5/images/banner-img.jpg") center/cover no-repeat;
+    }
+    .bg.alt3{
+      background:
+        radial-gradient(900px 420px at 80% 10%, rgba(253,224,71,.16), transparent 60%),
+        linear-gradient(180deg, rgba(11,99,173,.18), rgba(11,99,173,.98)),
+        url("https://s.autoquotepilot.com/V4-rfv-opf-5/images/banner-img.jpg") center/cover no-repeat;
+    }
+    .bg.dark{
+      background:
+        radial-gradient(800px 420px at 50% 0%, rgba(253,224,71,.10), transparent 55%),
+        linear-gradient(180deg, rgba(2,6,23,.50), rgba(2,6,23,.96));
+    }
+
+    /* Card content inside story */
+    .card{
+      position:relative;
+      z-index:2;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:var(--radius);
+      padding:16px 14px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadowSoft);
+      overflow:hidden;
+    }
+    .card.white{
+      background:#fff;
+      color:#0b1220;
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: var(--shadow);
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18);
+      font-weight:950;
+      font-size:12px;
+      letter-spacing:.2px;
+      user-select:none;
+    }
+    .white .pill{
+      background:#eef4fb;
+      border:1px solid #dbeafe;
+      color:#0b1220;
+    }
+
+    h1,h2,h3{margin:0}
+    .title{
+      margin-top:10px;
+      font-size:28px;
+      line-height:1.12;
+      font-weight:950;
+      letter-spacing:.2px;
+      text-shadow:0 10px 24px rgba(0,0,0,.25);
+    }
+    .white .title{text-shadow:none}
+
+    .sub{
+      margin-top:10px;
+      font-size:14px;
+      font-weight:850;
+      opacity:.95;
+      line-height:1.35;
+    }
+    .white .sub{opacity:1;color:#334155}
+
+    .highlight{color:var(--yellow)}
+    .white .highlight{color:#b45309}
+
+    /* Buttons */
+    .btnRow{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .btn{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:14px;
+      padding:14px 12px;
+      font-weight:950;
+      font-size:20px;
+      text-decoration:none;
+      cursor:pointer;
+      user-select:none;
+      border:2px solid rgba(12,12,12,.88);
+      background:var(--yellow);
+      color:#0b1220;
+      box-shadow:0 14px 26px rgba(2,6,23,.20);
+      overflow:hidden;
+      transform: translateZ(0);
+    }
+    .btn:before{
+      content:"";
+      position:absolute;
+      inset:-50% -60%;
+      background: linear-gradient(115deg, transparent 0 35%, rgba(255,255,255,.65) 45%, transparent 55% 100%);
+      transform: translateX(-55%);
+      animation: shimmer 2.8s linear infinite;
+      opacity:.92;
+      pointer-events:none;
+    }
+    @keyframes shimmer{
+      0%{ transform: translateX(-55%); }
+      100%{ transform: translateX(55%); }
+    }
+    .btn:active{transform: translateY(1px) scale(.99);}
+
+    .btn.secondary{
+      background:#fff;
+      border:2px solid rgba(12,12,12,.22);
+      color:#0b1220;
+    }
+    .btn.secondary:before{display:none}
+
+    .fine{
+      margin-top:12px;
+      font-size:11px;
+      font-weight:900;
+      opacity:.88;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      line-height:1.25;
+    }
+    .lock{
+      width:12px;height:12px;border-radius:2px;
+      background:#fff; display:inline-block; position:relative; flex:0 0 auto;
+    }
+    .lock:before{
+      content:"";
+      position:absolute; left:2px; right:2px; top:-5px; height:6px;
+      border:2px solid #fff; border-bottom:none; border-radius:7px 7px 0 0;
+    }
+    .white .fine{color:#475569; opacity:1;}
+    .white .lock{background:#0b63ad}
+    .white .lock:before{border-color:#0b63ad}
+
+    /* Quotes mini table */
+    .quotes{
+      margin-top:12px;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,.08);
+    }
+    .qHead{
+      background:var(--blue);
+      color:#fff;
+      display:grid;
+      grid-template-columns:1.2fr 1fr .8fr .8fr;
+      gap:6px;
+      padding:10px 10px;
+      font-weight:950;
+      font-size:12px;
+    }
+    .qBody{
+      background:#fff;
+      color:#0b1220;
+      max-height:170px;
+      overflow:hidden;
+      position:relative;
+    }
+    .qScroller{
+      will-change: transform;
+      animation: qScroll linear infinite;
+      animation-duration: var(--qtime, 28s);
+    }
+    @keyframes qScroll{
+      from{ transform: translateY(0); }
+      to{ transform: translateY(-50%); }
+    }
+    .qRow{
+      display:grid;
+      grid-template-columns:1.2fr 1fr .8fr .8fr;
+      gap:6px;
+      padding:10px 10px;
+      font-size:13px;
+      border-top:1px solid #e5e7eb;
+      align-items:center;
+    }
+    .qRow:nth-child(even){background:#f7f9fc}
+    .blur{
+      height:12px;width:70%;
+      background:linear-gradient(90deg,#d1d5db,#eef2f7);
+      border-radius:999px;
+    }
+    .rate{font-weight:950;text-align:right}
+
+    /* Reviews */
+    .review{
+      margin-top:12px;
+      background:#fff;
+      color:#0b1220;
+      border-radius:14px;
+      border:2px solid var(--blue-line);
+      padding:12px;
+      box-shadow: var(--shadowSoft);
+    }
+    .stars{display:flex;gap:3px;margin-bottom:8px}
+    .star{
+      width:14px;height:14px;background:conic-gradient(from 0deg,var(--orange) 0 100%);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 67% 57%, 79% 91%, 50% 70%, 21% 91%, 33% 57%, 2% 35%, 39% 35%);
+    }
+    .quote{
+      font-size:13px;
+      font-weight:750;
+      line-height:1.45;
+      margin-bottom:10px;
+    }
+    .user{
+      display:flex;align-items:center;gap:10px;
+    }
+    .ava{
+      width:42px;height:42px;border-radius:999px;overflow:hidden;
+      background:#e5e7eb;
+      border:2px solid #fff;
+      box-shadow:0 6px 14px rgba(2,6,23,.12);
+      flex:0 0 auto;
+    }
+    .ava img{width:100%;height:100%;object-fit:cover}
+    .uname{font-weight:950;font-size:13px}
+    .verified{
+      margin-top:2px;
+      font-size:11px;
+      font-weight:950;
+      color:#16a34a;
+      display:flex;align-items:center;gap:6px;
+    }
+    .check{
+      width:14px;height:14px;border-radius:999px;background:#16a34a;color:#fff;
+      display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:950;
+    }
+
+    /* Footer text in a story slide */
+    .legal{
+      font-size:10.5px;
+      line-height:1.45;
+      color:#475569;
+    }
+    .links{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      font-weight:900;
+      font-size:11px;
+      color:#0b1220;
+    }
+    .links a{color:#0b1220;text-decoration:none}
+
+    /* Tap zones like stories */
+    .navZones{
+      position:absolute;
+      inset:0;
+      z-index:60;
+      display:flex;
+    }
+    .zone{
+      flex:1;
+      border:0;
+      background:transparent;
+      cursor:pointer;
+    }
+    .zone:active{background:rgba(255,255,255,.03)}
+
+    /* Small hint bottom */
+    .hint{
+      position:absolute;
+      left:14px; right:14px; bottom:10px;
+      z-index:55;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      pointer-events:none;
+      font-size:11px;
+      font-weight:900;
+      opacity:.86;
+    }
+    .hint .k{
+      display:flex;align-items:center;gap:8px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      padding:8px 10px;
+      border-radius:999px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      .track{transition:none!important}
+      .btn:before{animation:none!important}
+      .qScroller{animation:none!important}
+      .bar > span{transition:none!important}
+    }
+
+    /* Desktop: still looks like story phone centered */
+    @media (min-width: 900px){
+      body{background:#070b14;}
+      .viewport{
+        border-radius:24px;
+        box-shadow:0 28px 90px rgba(0,0,0,.55);
+        height: 92vh;
+        max-height: 860px;
+      }
+    }
+  </style>
+
+  <script>
+    async function setStateName() {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+        const state = data.region || "Your State";
+        document.querySelectorAll("[data-state]").forEach(el => el.textContent = state);
+      } catch (e) {
+        document.querySelectorAll("[data-state]").forEach(el => el.textContent = "Your State");
+      }
+    }
+    setStateName();
+  </script>
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PL5B9NSD"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End GTM (noscript) -->
+
+  <div class="app">
+    <div class="viewport" id="viewport" aria-label="AutoQuotePilot Story Experience">
+
+      <!-- Progress -->
+      <div class="progress" id="progress" style="--count:6"></div>
+
+      <!-- Top small header -->
+      <div class="top">
+        <div class="brand">
+          <div class="badge">A</div>
+          <div class="txt">
+            <b>AutoQuote Pilot</b>
+            <small>Swipe / Tap to navigate</small>
+          </div>
+        </div>
+        <div class="meta">
+          <span id="idxText">1/6</span><span class="dot"></span><span id="timeText">3s</span>
+        </div>
+      </div>
+
+      <!-- Tap zones (left=prev, right=next) -->
+      <div class="navZones" aria-hidden="true">
+        <button class="zone" id="prevBtn" type="button" aria-label="Previous"></button>
+        <button class="zone" id="nextBtn" type="button" aria-label="Next"></button>
+      </div>
+
+      <!-- Track -->
+      <div class="track" id="track">
+        <!-- Slide 1: welcome -->
+        <section class="slide" data-duration="3000">
+          <div class="bg"></div>
+          <div class="card">
+            <div class="pill"><i class="fa-solid fa-hand-sparkles"></i> Welcome</div>
+            <h1 class="title">Save up to <span class="highlight">$710</span><br/>on auto insurance</h1>
+            <div class="sub">We match you to offers near <b data-state>Your State</b> in a few taps.</div>
+            <div class="fine"><span class="lock"></span><span>100% secure &amp; confidential</span></div>
+          </div>
+        </section>
+
+        <!-- Slide 2: location -->
+        <section class="slide" data-duration="3000">
+          <div class="bg alt2"></div>
+          <div class="card">
+            <div class="pill"><i class="fa-solid fa-location-dot"></i> Your Area</div>
+            <h2 class="title">Rates starting at<br/><span class="highlight">$19.99 / month</span></h2>
+            <div class="sub">Live offers shown for <b data-state>Your State</b> (when available).</div>
+          </div>
+        </section>
+
+        <!-- Slide 3: Question (CTA) -->
+        <section class="slide" data-duration="7000">
+          <div class="bg alt3"></div>
+          <div class="card white">
+            <div class="pill"><i class="fa-solid fa-bolt"></i> Quick Question</div>
+            <h2 class="title" style="font-size:24px;">Are you currently insured?</h2>
+            <div class="sub">Tap one option to continue.</div>
+            <div class="btnRow">
+              <a class="btn" href="https://trk.reliableautopolicy.com/click">YES</a>
+              <a class="btn secondary" href="https://trk.reliableautopolicy.com/click">NO</a>
+            </div>
+            <div class="fine"><span class="lock" style="background:#0b63ad"></span><span>We keep your information secure &amp; confidential.</span></div>
+          </div>
+        </section>
+
+        <!-- Slide 4: Quotes -->
+        <section class="slide" data-duration="4000">
+          <div class="bg dark"></div>
+          <div class="card white">
+            <div class="pill"><i class="fa-solid fa-chart-line"></i> Real-Time</div>
+            <h2 class="title" style="font-size:22px;">Real-Time Quotes</h2>
+
+            <div class="quotes">
+              <div class="qHead">
+                <div>Name</div><div>Model</div><div>State</div><div style="text-align:right;">Rate</div>
+              </div>
+              <div class="qBody">
+                <div class="qScroller" id="qScroller">
+                  <div class="qRow"><div><div class="blur"></div></div><div>Chrysler</div><div>MT</div><div class="rate">$32/mo</div></div>
+                  <div class="qRow"><div><div class="blur" style="width:55%"></div></div><div>Ford</div><div>NC</div><div class="rate">$29/mo</div></div>
+                  <div class="qRow"><div><div class="blur" style="width:60%"></div></div><div>Dodge</div><div>MO</div><div class="rate">$30/mo</div></div>
+                  <div class="qRow"><div><div class="blur" style="width:50%"></div></div><div>Fiat</div><div>WI</div><div class="rate">$33/mo</div></div>
+                  <div class="qRow"><div><div class="blur" style="width:65%"></div></div><div>Ford</div><div>TX</div><div class="rate">$30/mo</div></div>
+                  <div class="qRow"><div><div class="blur" style="width:58%"></div></div><div>Genesis</div><div>NY</div><div class="rate">$25/mo</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sub" style="margin-top:10px;">(Hold to pause. Swipe to move.)</div>
+          </div>
+        </section>
+
+        <!-- Slide 5: Reviews -->
+        <section class="slide" data-duration="5000">
+          <div class="bg alt2"></div>
+          <div class="card white">
+            <div class="pill"><i class="fa-solid fa-star"></i> Reviews</div>
+            <h2 class="title" style="font-size:22px;">Customer Reviews</h2>
+            <div class="sub">Real feedback from real drivers.</div>
+
+            <div class="review">
+              <div class="stars">
+                <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+              </div>
+              <div class="quote">"Excellent coverage for less money. This is the smartest way to insure your car!"</div>
+              <div class="user">
+                <div class="ava"><img src="https://quotediscountusa.com/images/download%20(4).jpeg" alt="Grace K"></div>
+                <div>
+                  <div class="uname">Grace K</div>
+                  <div class="verified"><span class="check">✓</span> Verified Buyer</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review">
+              <div class="stars">
+                <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+              </div>
+              <div class="quote">"The signup process was a breeze, and the savings are real. I'm recommending this to everyone!"</div>
+              <div class="user">
+                <div class="ava"><img src="https://quotediscountusa.com/images/download%20(2).jpeg" alt="Emily B"></div>
+                <div>
+                  <div class="uname">Emily B.</div>
+                  <div class="verified"><span class="check">✓</span> Verified Buyer</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 6: Footer / legal -->
+        <section class="slide" data-duration="6000">
+          <div class="bg dark"></div>
+          <div class="card white">
+            <div class="pill"><i class="fa-solid fa-circle-info"></i> Disclaimer</div>
+            <h2 class="title" style="font-size:20px;">Before you go</h2>
+            <div class="sub" style="margin-bottom:10px;">Tap right to replay or tap the button below to continue.</div>
+
+            <a class="btn" href="https://trk.reliableautopolicy.com/click" style="width:100%;">Continue</a>
+
+            <div style="margin-top:12px" class="legal">
+              Disclaimer: savemaxauto is a top savings referral service which enables consumers to quickly and easily request multiple competitive insurance company quotes from optimally selected local insurance agents and companies using our proprietary consumer alignment technology. We do not provide insurance and we do not represent any specific insurance provider. Please note that lowest listed rates and potential savings may not be representative or available from all companies. autoquotepilot.com matches users to advertisers and insurance agents only after we’ve received certain information from you, and your actual rates and savings will vary based on your location, coverage limits, deductibles, driving records, type of vehicle, affiliations, and many other variables.
+              <div class="links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms Of Use</a>
+                <a href="mailto:contact@savemaxauto.org">contact@savemaxauto.org</a>
+                <a href="#">savemaxauto.org</a>
+                <span>74 E Glenwood Ave Smyrna, DE 19977</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="hint" aria-hidden="true">
+        <div class="k"><i class="fa-solid fa-hand-pointer"></i> Tap left/right</div>
+        <div class="k"><i class="fa-solid fa-arrows-left-right"></i> Swipe</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Duplicate quote rows so the scroller loops cleanly
+    (function(){
+      const sc = document.getElementById("qScroller");
+      if(!sc) return;
+      const rows = Array.from(sc.children);
+      rows.forEach(r => sc.appendChild(r.cloneNode(true)));
+      const perRowSeconds = 1.7;
+      const minSeconds = 18;
+      const time = Math.max(minSeconds, rows.length * perRowSeconds);
+      sc.style.setProperty("--qtime", time + "s");
+    })();
+  </script>
+
+  <script>
+    (function(){
+      const viewport = document.getElementById("viewport");
+      const track = document.getElementById("track");
+      const progressEl = document.getElementById("progress");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const idxText = document.getElementById("idxText");
+      const timeText = document.getElementById("timeText");
+
+      if(!viewport || !track || !progressEl) return;
+
+      const slides = Array.from(track.querySelectorAll(".slide"));
+      const count = slides.length;
+
+      // build progress bars
+      progressEl.style.setProperty("--count", count);
+      progressEl.innerHTML = new Array(count).fill(0).map(() => `<div class="bar"><span></span></div>`).join("");
+      const bars = Array.from(progressEl.querySelectorAll(".bar > span"));
+
+      let index = 0;
+      let startTs = 0;
+      let paused = false;
+      let currentDuration = getDurationMs(0);
+
+      function getDurationMs(i){
+        const ms = parseInt(slides[i]?.getAttribute("data-duration") || "", 10);
+        return Number.isFinite(ms) && ms > 500 ? ms : parseInt(getComputedStyle(document.documentElement).getPropertyValue("--storyDur"),10) || 3000;
+      }
+
+      function clamp(i){
+        if(i < 0) return 0;            // instagram style: stop at first
+        if(i >= count) return 0;        // loop back to start at end (replay)
+        return i;
+      }
+
+      function setIndex(i, animate=true){
+        index = clamp(i);
+        currentDuration = getDurationMs(index);
+        track.style.transition = animate ? "transform 360ms cubic-bezier(.2,.9,.2,1)" : "none";
+        track.style.transform = "translateX(" + (-index * 100) + "%)";
+
+        // fill progress
+        for(let k=0;k<count;k++){
+          if(k < index) bars[k].style.width = "100%";
+          else bars[k].style.width = "0%";
+        }
+
+        idxText.textContent = (index+1) + "/" + count;
+        timeText.textContent = Math.round(currentDuration/1000) + "s";
+
+        startTs = performance.now();
+      }
+
+      function pause(){ paused = true; }
+      function resume(){
+        if(!paused) return;
+        paused = false;
+        // restart current story timing
+        startTs = performance.now();
+        // keep already filled bars accurate
+        for(let k=0;k<count;k++){
+          if(k < index) bars[k].style.width = "100%";
+          else if(k > index) bars[k].style.width = "0%";
+        }
+      }
+
+      function next(){ setIndex(index + 1); }
+      function prev(){ setIndex(index - 1); }
+
+      // Tap zones
+      prevBtn?.addEventListener("click", prev);
+      nextBtn?.addEventListener("click", next);
+
+      // Hold-to-pause like stories
+      viewport.addEventListener("pointerdown", () => pause(), {passive:true});
+      window.addEventListener("pointerup", () => resume(), {passive:true});
+      window.addEventListener("pointercancel", () => resume(), {passive:true});
+
+      // Swipe support
+      let sx=0, sy=0, dragging=false, moved=false;
+      viewport.addEventListener("touchstart", (e)=>{
+        if(!e.touches || !e.touches[0]) return;
+        sx = e.touches[0].clientX;
+        sy = e.touches[0].clientY;
+        dragging = true;
+        moved = false;
+        pause();
+      }, {passive:true});
+
+      viewport.addEventListener("touchmove", (e)=>{
+        if(!dragging || !e.touches || !e.touches[0]) return;
+        const dx = e.touches[0].clientX - sx;
+        const dy = e.touches[0].clientY - sy;
+        if(Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) moved = true;
+      }, {passive:true});
+
+      viewport.addEventListener("touchend", (e)=>{
+        if(!dragging) return;
+        dragging = false;
+
+        const SWIPE = 42;
+        if(e.changedTouches && e.changedTouches[0]){
+          const ex = e.changedTouches[0].clientX;
+          const dx = ex - sx;
+
+          if(moved && dx <= -SWIPE) next();
+          else if(moved && dx >= SWIPE) prev();
+          else {
+            // treat as "tap" near side: use screen halves (common story behavior)
+            const tapX = ex;
+            const mid = viewport.getBoundingClientRect().left + viewport.getBoundingClientRect().width/2;
+            if(tapX < mid) prev(); else next();
+          }
+        }
+        resume();
+      }, {passive:true});
+
+      // Keyboard (desktop)
+      window.addEventListener("keydown", (e)=>{
+        if(e.key === "ArrowRight") next();
+        if(e.key === "ArrowLeft") prev();
+        if(e.key === " ") { paused ? resume() : pause(); }
+      });
+
+      // Auto-advance tick
+      const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function tick(now){
+        if(prefersReduced){
+          // no auto-advance; just keep bars filled for current
+          if(bars[index]) bars[index].style.width = "100%";
+          requestAnimationFrame(tick);
+          return;
+        }
+
+        if(paused){
+          requestAnimationFrame(tick);
+          return;
+        }
+
+        const elapsed = now - startTs;
+        const pct = Math.max(0, Math.min(1, elapsed / currentDuration));
+        if(bars[index]) bars[index].style.width = (pct * 100).toFixed(2) + "%";
+
+        if(elapsed >= currentDuration){
+          next();
+        }
+        requestAnimationFrame(tick);
+      }
+
+      // Init
+      setIndex(0, false);
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
