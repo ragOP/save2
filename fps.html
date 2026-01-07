@@ -1,11 +1,1014 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>savemaxauto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+ 
 </head>
+<style>
+    .Title,.loadWaper,.lockAndP,.subTitel,.tagline,table {
+    text-align: center
+}
+
+.alart,.navBarWaper {
+    display: flex;
+    align-items: center
+}
+
+.heroBG,.overlay {
+    position: absolute
+}
+
+.congrasButton,.navCall {
+    animation: 1s infinite x-shaking
+}
+
+#alart,#heroStep2,#loadImage2,#loadImage3,#realTime,#step2,#step3 {
+    display: none
+}
+
+body {
+    font-family: Oswald
+}
+
+@font-face {
+    font-family: pFont;
+    src: url(../font/SourceSansPro-Semibold.otf)
+}
+
+@font-face {
+    font-family: pFontRegular;
+    src: url(../font/SourceSansPro-Regular.otf)
+}
+
+.alart {
+    background: #ffede0;
+    color: #011733;
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    font-weight: 700;
+    justify-content: center
+}
+
+.navBar {
+    background: #04201e;
+    color: #fff
+}
+
+.YesNobutton:hover,.navCall {
+    background: #00be50;
+    color: #fff
+}
+
+.logoWaper {
+    width: 30%;
+    height: auto
+}
+
+.logo {
+    width: 100%;
+    height: auto
+}
+
+.navBarWaper {
+    width: 100%;
+    height: 100px;
+    justify-content: space-between
+}
+
+.YesNobutton,.navBarButton {
+    align-items: center;
+    display: flex
+}
+
+.navBarButton {
+    justify-content: right
+}
+
+.navBarButtonWaper {
+    width: 70%
+}
+
+.navBarButton span {
+    font-size: 18px;
+    margin-right: 3%
+}
+
+.navCall {
+    border: none;
+    font-size: 26px;
+    width: 263px;
+    height: 70px;
+    border-radius: 10px;
+    font-weight: 700
+}
+
+.heroSection {
+    width: 100%;
+    height: 780px;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    overflow: hidden
+}
+
+.heroBG,.overlay {
+    height: 100%
+}
+
+.heroSectionWaper,.overlay {
+    background: linear-gradient(180deg,#002c29,#002c29c4);
+    width: 100%
+}
+
+.heroBG {
+    width: 100%;
+    object-fit: cover;
+    object-position: center
+}
+
+.heroSectionWaper {
+    height: 780px;
+    position: relative
+}
+
+.heroSectionContent {
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: auto
+}
+
+.loadWaper,.qustionCardContent {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%)
+}
+
+.subTitel {
+    width: 70%;
+    margin: 0 auto;
+    font-size: 34px
+}
+
+.Title,.tagline {
+    margin: 15px auto 0
+}
+
+.Title {
+    width: 70%;
+    font-size: 54px
+}
+
+.Title span {
+    color: #00be50
+}
+
+.fireImage {
+    width: 24px;
+    height: 24px
+}
+
+.tagline {
+    font-size: 24px;
+    width: 70%;
+    font-family: pFont
+}
+
+.Disclaimer,.copyRight,.customerReviewContent p,.lockAndP {
+    font-family: pFontRegular
+}
+
+.qustionCard,.qustionCard1 {
+    width: 50%;
+    height: 212px;
+    margin: 3% auto 0;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    max-width: 565px
+}
+
+.qustionCard1 {
+    height: 312px
+}
+
+.qustionCard img,.qustionCard1 img {
+    width: 15%;
+    position: absolute;
+    right: -1%
+}
+
+.qustionCardContent {
+    position: absolute;
+    color: #0c2b29;
+    width: 80%;
+    text-align: center
+}
+
+.qustionCardContent h3 {
+    font-size: 42px!important;
+    font-weight: 700
+}
+
+.YesNobuttonWaper {
+    width: 100%;
+    display: flex
+}
+
+.YesNobutton,.YesNobutton1 {
+    width: 50%;
+    height: 70px;
+    background: #e4fffd;
+    margin: 10px;
+    font-size: 20px;
+    color: #2ca199;
+    text-decoration: none
+}
+
+.YesNobuttonWaper img {
+    width: 60%;
+    margin: 0 auto;
+    background: red
+}
+
+.YesNobutton {
+    justify-content: center;
+    border: 1px solid #2ca199;
+    border-radius: 5px
+}
+
+.YesNobutton:hover {
+    transition: .5s
+}
+
+.YesNobutton1 {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #2ca199;
+    border-radius: 5px;
+    padding-top: 1.5%
+}
+
+.YesNobutton1 p {
+    font-size: 13px
+}
+
+.lockAndP {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.RTMQ,.realTimeHeader {
+    align-items: center;
+    height: 70px;
+    display: flex
+}
+
+.realTime {
+    width: 100%;
+    padding: 50PX
+}
+
+.realTimeWaper {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 1px 50px -20px;
+    border-radius: 10px
+}
+
+table {
+    width: 100%
+}
+
+table tr td {
+    width: 25%
+}
+
+.RTMQ {
+    width: 100%;
+    background: #fbfbfb;
+    border-radius: 10px;
+    border: 1px solid #dfeeff;
+    margin-top: 15px
+}
+
+.tableRow {
+    padding-left: 20px
+}
+
+.realTimeHeader {
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    font-size: 34px;
+    background: #fff6e4;
+    border-radius: 10px;
+    border: none
+}
+
+.realTimeHeader img {
+    float: left;
+    height: 70px;
+    left: 0;
+    position: absolute
+}
+
+.tableRowNameL {
+    filter: blur(4px)
+}
+
+.customerReview {
+    width: 100%;
+    padding-top: 70px;
+    padding-bottom: 70px
+}
+
+.customerReviewContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.customerReviewContent h1 {
+    color: #143863;
+    font-size: 44px;
+    font-weight: 700
+}
+
+.customerReviewContent p {
+    font-size: 16px
+}
+
+.customerReviewContent img {
+    height: 83px
+}
+
+.revireCard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 30px;
+    padding-bottom: 30px
+}
+
+.cards {
+    width: 30%;
+    box-shadow: 2px 4px 25px 0 #b5b5b5a8;
+    border-radius: 15px
+}
+
+.loadWaper {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    color: #0c2b29
+}
+
+.loadImg {
+    width: 60%!important;
+    position: static!important;
+    display: block;
+    margin: 0 auto
+}
+
+.congrasButton {
+    width: 300px;
+    display: flex;
+    text-decoration: none;
+    background: #00be50;
+    color: #fff;
+    font-size: 30px;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    border-radius: 20px;
+    border: none;
+    margin: 0 auto
+}
+
+.Highlighted,.copyRight,.footer {
+    width: 100%
+}
+
+.congrasButton img {
+    width: 40px;
+    position: static;
+    padding: 0;
+    margin: 0;
+    background: 0 0
+}
+
+.footer img,.footer p {
+    display: block;
+    margin: 0 auto
+}
+
+.Disclaimer {
+    padding: 70px;
+    background: #f2f8ff
+}
+
+.Disclaimer p {
+    text-align: justify
+}
+
+.Highlighted h1,.copyRight,.footer p,.privacyPolicy h1 {
+    text-align: center
+}
+
+.HighlightedImagesWaper {
+    display: flex;
+    justify-content: space-around
+}
+
+.HighlightedImagesWaper img {
+    width: 16%
+}
+
+.Highlighted h1 {
+    color: #114380;
+    font-weight: bolder
+}
+
+.footer {
+    background: #04201e;
+    height: 250px;
+    padding: 50px;
+    color: #f2f8ff
+}
+
+.footer img {
+    width: 200px
+}
+
+.footer a {
+    text-decoration: none;
+    color: #f2f8ff
+}
+
+.copyRight {
+    background: #051a18;
+    height: 50px;
+    line-height: 50px;
+    color: #f2f8ff
+}
+
+.copyRight p {
+    opacity: 7
+}
+
+.privacyPolicy h1 {
+    color: #114380
+}
+
+.forPc {
+    display: flex
+}
+
+.forPch {
+    display: inline-block
+}
+
+.forMobile {
+    display: none!important
+}
+
+@media only screen and (max-width: 600px) {
+    .alart,.navBarWaper {
+        width:100%;
+        display: flex;
+        align-items: center
+    }
+
+    .alart {
+        background: #ffede0;
+        color: #011733;
+        height: 50px;
+        font-size: 4vw;
+        justify-content: center
+    }
+
+    .heroSectionContent,.qustionCardContent {
+        left: 50%;
+        transform: translate(-50%,-50%);
+        position: absolute
+    }
+
+    .alart,.navCall {
+        font-weight: 700
+    }
+
+    .HighlightedMobile,.copyRight,.lockAndP,.navBarButton,.qustionCardContent {
+        text-align: center
+    }
+
+    .Disclaimer,.copyRight p,.navBarButton span {
+        font-family: pFontRegular
+    }
+
+    .congrasButton,.navCall {
+        background: #00be50;
+        color: #fff
+    }
+
+    .navBarWaper {
+        height: auto;
+        justify-content: space-between;
+        padding-top: 10px;
+        padding-bottom: 10px
+    }
+
+    .logoWaper {
+        width: 40%;
+        height: auto
+    }
+
+    .navBarButtonWaper {
+        width: 50%
+    }
+
+    .navBarButton {
+        width: 100%;
+        display: block
+    }
+
+    .navBarButton span {
+        font-size: 3vw;
+        margin-right: -1%!important
+    }
+
+    .navCall {
+        border: none;
+        width: 100%;
+        height: 50px;
+        border-radius: 10px;
+        font-size: 4.5vw
+    }
+
+    .navCall img {
+        width: 6vw
+    }
+
+    .heroSectionContent {
+        width: 100%;
+        top: 45%;
+        height: auto
+    }
+
+    .subTitel {
+        width: 95%;
+        font-size: 6vw
+    }
+
+    .Title {
+        width: 95%;
+        font-size: 11.5vw
+    }
+
+    .tagline {
+        width: 95%;
+        height: 40px;
+        font-size: 4.5vw
+    }
+
+    .YesNobutton1 p,.lockAndP {
+        font-size: 3vw
+    }
+
+    .qustionCard,.qustionCard1 {
+        width: 95%;
+        height: 212px;
+        margin-top: 20px
+    }
+
+    .lockAndP {
+        width: 95%;
+        margin-top: 20px!important;
+        margin: 0 auto
+    }
+
+    .heroSection,.heroSectionWaper {
+        height: 100vh
+    }
+
+    .congrasButton {
+        width: 100%;
+        display: flex;
+        text-decoration: none;
+        font-size: 8vw;
+        align-items: center;
+        justify-content: center;
+        height: 80px;
+        border-radius: 20px;
+        border: none;
+        margin: 0 auto
+    }
+
+    .qustionCardContent {
+        top: 50%;
+        color: #0c2b29;
+        width: 95%
+    }
+
+    .copyRight,.footer {
+        color: #f2f8ff;
+        width: 100%
+    }
+
+    .realTime {
+        padding: 30px 10px
+    }
+
+    .realTimeWaper {
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: 0 1px 50px -20px;
+        border-radius: 10px
+    }
+
+    .realTimeHeader {
+        font-size: 7vw;
+        justify-content: right;
+        padding-right: 30px
+    }
+
+    table tr td {
+        width: 25%;
+        font-size: 4vw
+    }
+
+    .tableRow {
+        padding: 10px
+    }
+
+    .customerReviewContent {
+        display: block;
+        text-align: center
+    }
+
+    .customerReviewContent2nd {
+        width: 95%;
+        display: block;
+        margin: 0 auto
+    }
+
+    .customerReviewContent2nd img {
+        width: 100%
+    }
+
+    .revireCard {
+        display: block
+    }
+
+    .cards {
+        width: 95%;
+        display: block;
+        margin: 20px auto 0;
+        border-radius: 5px
+    }
+
+    .customerReview {
+        width: 100%;
+        padding-top: 30px;
+        padding-bottom: 30px
+    }
+
+    .qustionCard img,.qustionCard1 img {
+        width: 15%;
+        height: 25%;
+        position: absolute;
+        right: -1%
+    }
+
+    .congrasButton img {
+        width: 40px;
+        height: auto;
+        position: static;
+        padding: 0;
+        margin: 0;
+        background: 0 0
+    }
+
+    .Disclaimer {
+        padding: 20px;
+        background: #f2f8ff
+    }
+
+    .HighlightedMobile h1 {
+        color: #114380;
+        font-weight: 700
+    }
+
+    .HighlightedImagesWaperMobile {
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    .HighlightedImagesWaperMobile img {
+        width: 30%
+    }
+
+    .forPc {
+        display: none!important
+    }
+
+    .forPcH {
+        display: none
+    }
+
+    .forMobile {
+        display: block!important
+    }
+
+    .footer {
+        background: #04201e;
+        height: auto;
+        padding: 20px;
+        font-size: 15px
+    }
+
+    .copyRight {
+        background: #051a18;
+        height: 50;
+        line-height: 50px;
+        font-size: 12px
+    }
+
+    .copyRight p {
+        padding: 0;
+        margin: 0;
+        opacity: 70%
+    }
+}
+
+/* Стили для названия сайта */
+.logo-text-center {
+    color: #00be50;
+    font-size: 28px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: Oswald;
+    text-align: center;
+    display: block;
+}
+
+.logo-text-center:hover {
+    color: #00be50;
+    text-decoration: none;
+}
+
+.footer-logo-text {
+    color: #00be50;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    font-family: Oswald;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Выравнивание навбара по центру */
+.navBarWaper {
+    justify-content: center !important;
+}
+
+.logoWaper {
+    width: 100% !important;
+    text-align: center;
+}
+
+/* Мобильные стили для названия сайта */
+@media only screen and (max-width: 600px) {
+    .logo-text-center {
+        font-size: 6vw;
+    }
+
+    .footer-logo-text {
+        font-size: 7vw;
+    }
+
+    .navBarWaper {
+        justify-content: center !important;
+    }
+
+    .logoWaper {
+        width: 100% !important;
+    }
+}
+
+/* Стили для возрастных кнопок */
+.ageButtonWaper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.ageButton {
+    width: 100%;
+    height: 70px;
+    background: #e4fffd;
+    color: #2ca199;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #2ca199;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: 700;
+    transition: 0.5s;
+}
+
+.ageButton:hover {
+    background: #00be50;
+    color: #fff;
+}
+
+/* Мобильные стили для возрастных кнопок */
+@media only screen and (max-width: 600px) {
+    .ageButtonWaper {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .ageButton {
+        height: 60px;
+        font-size: 5vw;
+        font-weight: 700;
+    }
+}
+
+@keyframes x-shaking {
+    0% {
+        transform: translateX(0);
+        transform: rotate(0)
+    }
+
+    15%,5% {
+        transform: translateX(10px);
+        transform: rotate(5deg)
+    }
+
+    10% {
+        transform: translateX(-10px);
+        transform: rotate(-5deg)
+    }
+
+    100%,20% {
+        transform: translateX(0)
+    }
+}
+
+</style>
+
 <body>
-    
+    <div class="alart" id="alart">
+        <span>🚨 LAST CHANCE: Your Low Rate Expires Soon! 🚨</span>
+    </div>
+    <div class="navBar">
+        <div class="navBarWaper container">
+            <div class="logoWaper">
+                <a class="logo-text-center">SaveMaxAuto</a>
+            </div>
+        </div>
+    </div>
+    <div class="heroSection">
+        <div class="heroSectionWaper">
+            <img loading="lazy" src="heroBG.webp" alt="heroBG" class="heroBG">
+            <div class="overlay"></div>
+            <div class="heroSectionContent" id="heroStep1">
+
+             <h3 class="subTitel">This is the Biggest Secret of 2025.</h3>
+                <h1 class="Title">Drivers Are Saving Up to <span>$710/month.</span></h1>
+                <p class="tagline"><img loading="lazy" src="/fireImage.png" alt="fireImage.webp"
+                        class="fireImage">You're Just One Click Away From It.</p>
+
+                <div id="step1">
+                    <div class="qustionCard container">
+                        <img loading="lazy" src="roundIcon.svg" alt="roundIcon.svg">
+                        <div class="qustionCardContent">
+                            <h3>Are You Currently Insured?</h3>
+                            <div class="ageButtonWaper">
+                                <a class="ageButton" href="">
+                                    Yes
+                                </a>
+                                <a class="ageButton" href="">
+                                    No
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="lockAndP">
+                    <!-- <img loading="lazy" src="lock.png" alt="roundIcon.svg" class="me-2"> -->
+                    We keep all your
+                    information 100% secure & confidential, always.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="customerReview" id="review">
+            <div class="customerReviewContent">
+                <div>
+                    <h1>Customer Reviews</h1>
+                    <p>Real feedback from real drivers. Learn how we’ve helped our customers save on auto insurance.</p>
+                </div>
+                <div>
+                    <img loading="lazy" src="./trustpilot.svg" alt="trustpilot">
+                </div>
+            </div>
+            <div class="customerReviewContent2nd mt-3">
+                <!-- <img loading="lazy" src="./TrustpilotMicro.svg" alt="TrustpilotMicro"> -->
+            </div>
+            <div id="carouselExample" class="carousel slide forPc mt-5">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="revireCard">
+                            <img loading="lazy" src="./Reviewcard1.png" alt="" class="cards">
+                            <img loading="lazy" src="./Reviewcard2.png" alt="" class="cards">
+                            <img loading="lazy" src="./Reviewcard3.png" alt="" class="cards">
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="revireCard">
+                            <img loading="lazy" src="Reviewcard4.png" alt="" class="cards">
+                            <img loading="lazy" src="Reviewcard5.png" alt="" class="cards">
+                            <img loading="lazy" src="Reviewcard6.png" alt="" class="cards">
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="forMobile">
+                <div class="revireCard">
+                    <img loading="lazy" src="Reviewcard1.png" alt="" class="cards">
+                    <img loading="lazy" src="Reviewcard2.png" alt="" class="cards">
+                    <img loading="lazy" src="Reviewcard3.png" alt="" class="cards">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Disclaimer">
+        <div class="container">
+            <p class="text-justify">
+                <b>Disclaimer: </b>We do not offer every plan available in your area. We represent multiple organizations with various products in your region. To get full information, please consult your state's Department of Insurance or a licensed insurance agent before making decisions. 
+We are not affiliated with or endorsed by any government agency or insurance regulator.
+Insurance carriers may offer various coverage types that are subject to eligibility requirements. Availability, pricing, and terms depend on provider, location, vehicle, and state regulations.
+This site provides general information only and does not offer professional financial, legal and insurance advice.  
+This is an advertisement, not a news article, consumer report, and regulatory update. We may receive compensation for clicks or sales, which can influence ad placement and company rankings.
+            </p>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-logo-text">SaveMaxAuto</div>
+        <p class="mt-4"><a href="privacy.html" class="me-3">PRIVACY POLICY</a> | <a href="terms.html"
+                class="ms-3">TERMS & CONDITIONS</a>
+        </p>
+        <p class="mt-3">DO NOT SELL OR SHARE MY PERSONAL INFORMATION / PRIVACY RIGHTS FOR RESIDENTS OF CERTAIN STATES </br>
+        GENESIS E-COM GROUP LLC, 30 N GOULD ST STE R SHERIDAN, WY 82801 USA
+        </p>
+    </div>
+    <div class="copyRight">
+        Copyright © 2025 SaveMaxAuto.com. All Rights Reserved
+    </div>
+
+
+ 
 </body>
+
 </html>
